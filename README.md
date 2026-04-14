@@ -45,10 +45,33 @@ The product includes a regional point-of-sale comparison panel to help users see
 ## Local setup
 
 1. Install dependencies: `pnpm install`
-2. Copy `.env.example` to `.env` and set a PostgreSQL `DATABASE_URL`
-3. Add `SKYSCANNER_API_KEY` if you want live Skyscanner results
-4. Generate the schema: `pnpm db:push`
-5. Seed demo data if desired: `pnpm db:seed`
-6. Start the app: `pnpm dev`
+2. Copy `.env.example` to `.env`
+3. Add `DATABASE_URL` if you want persistent saved searches and price alerts
+4. Add `SKYSCANNER_API_KEY` if you want live Skyscanner results
+5. If you configured PostgreSQL, generate the schema with `pnpm db:push`
+6. Seed demo data if desired: `pnpm db:seed`
+7. Start the app: `pnpm dev`
 
 If no `DATABASE_URL` is configured, the app falls back to in-memory demo persistence for saved searches and price alerts. If no `SKYSCANNER_API_KEY` is configured, the search layer falls back to mock provider data.
+
+## Vercel deployment
+
+This project can deploy to Vercel without a database or Skyscanner key on day one:
+
+- No `DATABASE_URL`: saved searches and price alerts fall back to in-memory demo mode
+- No `SKYSCANNER_API_KEY`: search falls back to deterministic mock flight data
+
+Recommended Vercel settings:
+
+- Framework preset: `Next.js`
+- Install command: `pnpm install`
+- Build command: `pnpm build`
+- Output directory: leave empty
+
+Optional environment variables:
+
+- `DATABASE_URL`: for PostgreSQL-backed saved searches and price alerts
+- `SKYSCANNER_API_KEY`: for live Skyscanner results
+- `SKYSCANNER_API_BASE_URL`: leave default unless your Skyscanner account requires a custom base URL
+
+The repo includes `pnpm-workspace.yaml` so Prisma and related packages are allowed to run their install/build scripts during CI installs on Vercel.
