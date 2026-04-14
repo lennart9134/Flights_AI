@@ -74,4 +74,4 @@ Optional environment variables:
 - `SKYSCANNER_API_KEY`: for live Skyscanner results
 - `SKYSCANNER_API_BASE_URL`: leave default unless your Skyscanner account requires a custom base URL
 
-The repo includes `pnpm-workspace.yaml` so Prisma and related packages are allowed to run their install/build scripts during CI installs on Vercel.
+The repo includes a `pnpm.onlyBuiltDependencies` block in `package.json` so Prisma and related packages are allowed to run their install/build scripts during CI installs on Vercel.
